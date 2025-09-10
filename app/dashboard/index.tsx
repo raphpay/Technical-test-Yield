@@ -17,8 +17,8 @@ export default function Dashboard() {
         keyExtractor={(item) => item.id}
         data={photos}
         renderItem={({ item }) => (
-          <View style={tw`w-full h-full bg-blue-600 m-4`}>
-            <Image source={{ uri: item.url }} />
+          <View style={tw`w-full h-full m-4`}>
+            <Image source={{ uri: item.url }} style={tw`h-[200px] w-[200px]`} />
             <Text>{item.title}</Text>
           </View>
         )}
