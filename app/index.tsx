@@ -1,7 +1,12 @@
 import { Controller } from "react-hook-form";
 import { Button, Text, TextInput, View } from "react-native";
+import { makeServer } from "../business-logic/server/server";
 import tw from "../components/tailwind";
 import useApp from "../hooks/useApp";
+
+if (__DEV__) {
+  makeServer({ environment: "development" });
+}
 
 export default function App() {
   const { control, handleSubmit, errors, onSubmit } = useApp();
