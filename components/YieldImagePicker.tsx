@@ -1,10 +1,10 @@
+import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import { Platform, View } from "react-native";
-import tw from "../components/tailwind";
-import YieldImagePicker from "../components/YieldImagePicker";
+import { Button, Platform, View } from "react-native";
+import tw from "./tailwind";
 
-export default function App() {
+export default function YieldImagePicker() {
   const [image, setImage] = useState<string | null>(null);
 
   async function pickImage() {
@@ -38,7 +38,14 @@ export default function App() {
 
   return (
     <View style={tw`flex-1 bg-base-white items-center justify-center`}>
-      <YieldImagePicker />
+      <Button title="Choisissez une image" onPress={pickImage} />
+      {image && (
+        <Image
+          source={{ uri: image }}
+          alt="image"
+          style={tw`w-[100px] h-[100px] bg-blue-500`}
+        />
+      )}
     </View>
   );
 }
