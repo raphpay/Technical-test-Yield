@@ -1,48 +1,50 @@
-import { router } from "expo-router";
-import { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Controller } from "react-hook-form";
+import { Button, Text, TextInput, View } from "react-native";
 import tw from "../components/tailwind";
+import useApp from "../hooks/useApp";
 
 export default function App() {
-  const [userName, setUserName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  function login() {
-    router.navigate("/dashboard");
-  }
+  const { control, handleSubmit, errors, onSubmit } = useApp();
 
   return (
     <View style={tw`flex-1 bg-gray-100 items-center justify-center`}>
-      <View
-        style={tw`bg-base-white/60 shadow p-8 rounded-md flex items-center justify-center gap-4`}
-      >
-        <Text style={tw`text-semibold text-lg text-center`}>
-          Bienvenue sur le test technique de Raphaël
-        </Text>
-        <Text style={tw`text-base`}>Connectez-vous pour en voir plus</Text>
+      <View style={tw`flex flex-col bg-blue-600 p-4 gap-4 rounded-md`}>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="Username"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              style={tw`w-full h-full p-2 rounded-md border-2 border-gray-600`}
+            />
+          )}
+          name="userName"
+        />
+        {errors.userName && <Text>This is required.</Text>}
 
-        <TextInput
-          value={userName}
-          onChange={(e: any) => setUserName(e.target.value)}
-          style={tw`w-full h-full p-2 rounded-md border-2 border-gray-600`}
-          placeholder="Username"
+        <Controller
+          control={control}
+          rules={{
+            maxLength: 100,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="Mot de passe"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              style={tw`w-full h-full p-2 rounded-md border-2 border-gray-600`}
+            />
+          )}
+          name="password"
         />
-        <TextInput
-          value={password}
-          onChange={(e: any) => setPassword(e.target.value)}
-          secureTextEntry={true}
-          placeholder="Mot de passe"
-          style={tw`w-full h-full p-2 rounded-md border-2 border-gray-600`}
-        />
-        <TouchableOpacity
-          onPress={login}
-          style={tw`rounded-md p-2 w-full bg-blue-500`}
-        >
-          <Text style={tw`text-center`}>Se connecter</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={login} style={tw`rounded-md p-2 w-full`}>
-          <Text style={tw`text-center underline`}>Créer un compte</Text>
-        </TouchableOpacity>
+
+        <Button title="Se connecter" onPress={handleSubmit(onSubmit)} />
       </View>
     </View>
   );
