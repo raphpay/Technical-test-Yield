@@ -82,3 +82,4 @@ L'application doit être utilisable en format portait et paysage
 
    ```
 7. Invitez-nous en tant que collaborateurs sur ce dépôt privé (vous recevrez nos identifiants GitHub par email).
+# Technical-test-Yield
