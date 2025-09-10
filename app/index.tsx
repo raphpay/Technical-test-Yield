@@ -1,44 +1,46 @@
-import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import { Platform, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import tw from "../components/tailwind";
-import YieldImagePicker from "../components/YieldImagePicker";
 
 export default function App() {
-  const [image, setImage] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  async function pickImage() {
-    if (Platform.OS !== "web") {
-      // No permissions request is necessary for launching the image library
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ["images"],
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      console.log(result);
-
-      if (!result.canceled) {
-        setImage(result.assets[0].uri);
-      }
-    } else {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ["images"],
-        base64: true,
-      });
-
-      if (!result.canceled && result.assets) {
-        const base64 = result.assets[0].base64;
-        const base64ToUpload = `data:image/jpeg;base64,${base64}`;
-        setImage(base64ToUpload);
-      }
-    }
-  }
+  function login() {}
 
   return (
-    <View style={tw`flex-1 bg-base-white items-center justify-center`}>
-      <YieldImagePicker />
+    <View style={tw`flex-1 bg-gray-100 items-center justify-center`}>
+      <View
+        style={tw`bg-base-white/60 shadow p-8 rounded-md flex items-center justify-center gap-4`}
+      >
+        <Text style={tw`text-semibold text-lg text-center`}>
+          Bienvenue sur le test technique de Raphaël
+        </Text>
+        <Text style={tw`text-base`}>Connectez-vous pour en voir plus</Text>
+
+        <TextInput
+          value={userName}
+          onChange={(e: any) => setUserName(e.target.value)}
+          style={tw`w-full h-full p-2 rounded-md border-2 border-gray-600`}
+          placeholder="Username"
+        />
+        <TextInput
+          value={password}
+          onChange={(e: any) => setPassword(e.target.value)}
+          secureTextEntry={true}
+          placeholder="Mot de passe"
+          style={tw`w-full h-full p-2 rounded-md border-2 border-gray-600`}
+        />
+        <TouchableOpacity
+          onPress={login}
+          style={tw`rounded-md p-2 w-full bg-blue-500`}
+        >
+          <Text style={tw`text-center`}>Se connecter</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={login} style={tw`rounded-md p-2 w-full`}>
+          <Text style={tw`text-center underline`}>Créer un compte</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

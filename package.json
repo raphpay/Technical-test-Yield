@@ -8,6 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
+  "main": "expo-router/entry",
   "dependencies": {
     "@expo/react-native-action-sheet": "^4.1.1",
     "@hookform/resolvers": "^5.2.1",
