@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import tw from "../components/tailwind";
@@ -6,7 +7,9 @@ export default function App() {
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  function login() {}
+  function login() {
+    router.navigate("/dashboard");
+  }
 
   return (
     <View style={tw`flex-1 bg-gray-100 items-center justify-center`}>
