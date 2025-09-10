@@ -8,7 +8,7 @@ export default function App() {
 
   return (
     <View style={tw`flex-1 bg-gray-100 items-center justify-center`}>
-      <View style={tw`flex flex-col bg-blue-600 p-4 gap-4 rounded-md`}>
+      <View style={tw`flex flex-col p-4 gap-4 rounded-md`}>
         <Controller
           control={control}
           rules={{
@@ -25,12 +25,16 @@ export default function App() {
           )}
           name="userName"
         />
-        {errors.userName && <Text>This is required.</Text>}
+        {errors.userName && (
+          <Text style={tw`text-red-500`}>This is required.</Text>
+        )}
 
         <Controller
           control={control}
           rules={{
-            maxLength: 100,
+            maxLength: 30,
+            minLength: 8,
+            required: true,
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
@@ -38,11 +42,18 @@ export default function App() {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              secureTextEntry={true}
               style={tw`w-full h-full p-2 rounded-md border-2 border-gray-600`}
             />
           )}
           name="password"
         />
+
+        {errors.password && (
+          <Text style={tw`text-red-500`}>
+            Le mot de passe doit contenir entre 8 et 30 caractères.
+          </Text>
+        )}
 
         <Button title="Se connecter" onPress={handleSubmit(onSubmit)} />
       </View>
