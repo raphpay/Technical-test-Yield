@@ -1,4 +1,4 @@
-import { createServer, Factory, Model } from "miragejs";
+import { createServer, Factory, Model, RestSerializer } from "miragejs";
 
 export function makeServer({ environment = "dev" } = {}) {
   let server = createServer({
@@ -20,6 +20,10 @@ export function makeServer({ environment = "dev" } = {}) {
           return new Date().toISOString();
         },
       }),
+    },
+
+    serializers: {
+      application: RestSerializer,
     },
 
     seeds(server) {
